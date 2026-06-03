@@ -130,6 +130,25 @@
             margin-left: 264px;
         }
 
+        .details-reveal {
+            display: inline-flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .details-hint {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.3);
+            cursor: default;
+            user-select: none;
+            letter-spacing: 0.02em;
+            transition: color 0.2s ease;
+        }
+
+        .details-reveal:hover .details-hint {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
         .details-box {
             display: inline-grid;
             grid-template-columns: auto auto;
@@ -141,6 +160,16 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             font-size: 12px;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-4px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .details-reveal:hover .details-box {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
         }
 
         .detail-label {
@@ -196,12 +225,18 @@
         </div>
     </div>
     <div class="details-wrap" id="details-wrap">
-        <div class="details-box">
-            <span class="detail-label">Ray ID</span>
-            <span class="detail-value" id="cf-ray-id">::RAY_ID::</span>
-            <span class="detail-label">Your IP</span>
-            <span class="detail-value">::CLIENT_IP::</span>
+        <div class="details-reveal">
+            <span class="details-hint">Technical details</span>
+            <div class="details-box">
+                <span class="detail-label">Ray ID</span>
+                <span class="detail-value" id="cf-ray-id">::RAY_ID::</span>
+                <span class="detail-label">Your IP</span>
+                <span class="detail-value">::CLIENT_IP::</span>
+            </div>
         </div>
+    </div>
+    <div class="details-wrap">
+        ::CLOUDFLARE_ERROR_500S_BOX::
     </div>
 </div>
 
