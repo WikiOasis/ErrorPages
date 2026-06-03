@@ -19,7 +19,7 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            padding-left: 10%;
+            padding: 0 10%;
             background: #1a1f2e;
             color: white;
             overflow: hidden;
@@ -51,47 +51,16 @@
 
         .container {
             display: flex;
-            align-items: center;
+            flex-direction: column;
             position: relative;
             z-index: 1;
-            gap: 24px;
+            gap: 20px;
         }
 
-        .challenge-box {
+        .top-row {
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin-left: 48px;
-            padding: 20px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            flex-shrink: 0;
-            position: relative;
-            min-width: 80px;
-            min-height: 80px;
-        }
-
-        .challenge-spinner {
-            position: absolute;
-            width: 36px;
-            height: 36px;
-            border: 3px solid rgba(255, 255, 255, 0.15);
-            border-top-color: rgba(91, 164, 212, 0.9);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        .challenge-spinner.hidden {
-            opacity: 0;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+            gap: 24px;
         }
 
         .logo {
@@ -154,13 +123,64 @@
             transform: scale(0.98);
         }
 
+        /* Indented to align with text content (logo 240px + gap 24px) */
+        .challenge-wrap {
+            margin-left: 264px;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .challenge-spinner-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 13px;
+            transition: opacity 0.3s ease;
+        }
+
+        .challenge-spinner-row.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .challenge-spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-top-color: rgba(91, 164, 212, 0.9);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .challenge-box {
+            padding: 16px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none;
+        }
+
+        .challenge-box.visible {
+            display: block;
+        }
+
         @media (max-width: 600px) {
             body {
                 padding: 20px;
                 justify-content: center;
             }
 
-            .container {
+            .top-row {
                 flex-direction: column;
                 text-align: center;
             }
@@ -169,9 +189,10 @@
                 justify-content: center;
             }
 
-            .challenge-box {
+            .challenge-wrap {
                 margin-left: 0;
                 width: 100%;
+                align-items: center;
             }
         }
     </style>
@@ -180,19 +201,26 @@
 <body>
 
 <div class="container">
-    <img class="logo" src="https://cdn.wikioasis.org/metawiki/3/38/WikiOasis_Logo.png" alt="WikiOasis Logo" />
-    <div class="content">
-        <h1>Security Checkpoint</h1>
-        <p class="url" id="page-url"></p>
-        <p class="description">Verifying your connection to WikiOasis. This usually only takes a moment.</p>
-        <div class="buttons">
-            <a href="https://status.wikioasis.org/" class="btn">Status Page</a>
-            <a href="https://discord.gg/GrrTcsVC2x" class="btn">Discord</a>
+    <div class="top-row">
+        <img class="logo" src="https://cdn.wikioasis.org/metawiki/3/38/WikiOasis_Logo.png" alt="WikiOasis Logo" />
+        <div class="content">
+            <h1>Security Checkpoint</h1>
+            <p class="url" id="page-url"></p>
+            <p class="description">Verifying your connection to WikiOasis. This usually only takes a moment.</p>
+            <div class="buttons">
+                <a href="https://status.wikioasis.org/" class="btn">Status Page</a>
+                <a href="https://discord.gg/GrrTcsVC2x" class="btn">Discord</a>
+            </div>
         </div>
     </div>
-    <div class="challenge-box" id="challenge-box">
-        <div class="challenge-spinner" id="challenge-spinner"></div>
-        ::CAPTCHA_BOX::
+    <div class="challenge-wrap">
+        <div class="challenge-spinner-row" id="challenge-spinner-row">
+            <div class="challenge-spinner"></div>
+            <span>Loading security check…</span>
+        </div>
+        <div class="challenge-box" id="challenge-box">
+            ::CAPTCHA_BOX::
+        </div>
     </div>
 </div>
 
@@ -201,20 +229,30 @@
 
     (function() {
         const box = document.getElementById('challenge-box');
-        const spinner = document.getElementById('challenge-spinner');
+        const spinnerRow = document.getElementById('challenge-spinner-row');
 
+        function reveal() {
+            box.classList.add('visible');
+            spinnerRow.classList.add('hidden');
+            setTimeout(function() { spinnerRow.remove(); }, 300);
+        }
+
+        // CF renders its widget into an iframe — watch for that
         const observer = new MutationObserver(function() {
-            const hasWidget = Array.from(box.children).some(function(el) {
-                return el !== spinner && (el.tagName === 'IFRAME' || el.children.length > 0);
-            });
-            if (hasWidget) {
-                spinner.classList.add('hidden');
-                setTimeout(function() { spinner.remove(); }, 300);
+            if (box.querySelector('iframe')) {
+                reveal();
                 observer.disconnect();
             }
         });
 
         observer.observe(box, { childList: true, subtree: true });
+
+        // Fallback: show whatever is there after 4s if no iframe detected
+        setTimeout(function() {
+            if (box.classList.contains('visible')) return;
+            reveal();
+            observer.disconnect();
+        }, 4000);
     })();
 </script>
 
