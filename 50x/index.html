@@ -4,7 +4,7 @@
     <link rel="icon" type="image/x-icon" href="https://cdn.wikioasis.org/images/metawiki/1/18/favicon.ico" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>503 • Service Unavailable</title>
+    <title id="page-title">5xx • Server Error</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://api.dashboard.instatus.com/widget?host=status.wikioasis.org&code=3a58baa4&locale=en">
     </script>
@@ -142,15 +142,55 @@
 <div class="container">
     <img class="logo" src="https://cdn.wikioasis.org/metawiki/3/38/WikiOasis_Logo.png" alt="WikiOasis Logo" />
     <div class="content">
-        <h1>503 • Service Unavailable</h1>
-        <p class="url"></p>
-        <p class="description">We're having some issues at the moment, please retry in a few moments.</p>
+        <h1 id="error-heading">5xx • Server Error</h1>
+        <p class="url" id="error-url"></p>
+        <p class="description" id="error-description">Something went wrong on our end. Please try again in a few moments.</p>
         <div class="buttons">
             <a href="https://status.wikioasis.org/" class="btn">Status Page</a>
             <a href="https://discord.gg/GrrTcsVC2x" class="btn">Discord</a>
         </div>
     </div>
 </div>
+
+<script>
+    (function() {
+        const ERROR_INFO = {
+            500: { title: 'Internal Server Error',        description: 'The server encountered an unexpected error and could not complete your request.' },
+            502: { title: 'Bad Gateway',                  description: 'The server received an invalid response from an upstream server. Please try again shortly.' },
+            503: { title: 'Service Unavailable',          description: "We're having some issues at the moment. Please retry in a few moments." },
+            504: { title: 'Gateway Timeout',              description: 'The server did not receive a timely response from an upstream server. Please try again.' },
+            520: { title: 'Unknown Error',                description: 'The origin server returned an empty, unknown, or unexpected response to Cloudflare.' },
+            521: { title: 'Web Server Is Down',           description: 'The origin server refused the connection from Cloudflare. Please try again shortly.' },
+            522: { title: 'Connection Timed Out',         description: 'Cloudflare could not negotiate a TCP connection with the origin server.' },
+            523: { title: 'Origin Is Unreachable',        description: 'Cloudflare could not reach the origin server. This may be a DNS issue.' },
+            524: { title: 'A Timeout Occurred',           description: 'Cloudflare established a connection to the origin server, but the server did not respond in time.' },
+            525: { title: 'SSL Handshake Failed',         description: 'Cloudflare could not complete an SSL/TLS handshake with the origin server.' },
+            526: { title: 'Invalid SSL Certificate',      description: 'Cloudflare could not validate the SSL certificate on the origin server.' },
+            530: { title: 'Origin DNS Error',             description: 'Cloudflare could not resolve the origin hostname. Please check our status page for updates.' },
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const code = parseInt(params.get('code'), 10) || null;
+        const info = code ? ERROR_INFO[code] : null;
+
+        const heading = document.getElementById('error-heading');
+        const description = document.getElementById('error-description');
+        const pageTitle = document.getElementById('page-title');
+        const errorUrl = document.getElementById('error-url');
+
+        if (code && info) {
+            heading.textContent = code + ' • ' + info.title;
+            description.textContent = info.description;
+            pageTitle.textContent = code + ' • ' + info.title;
+        } else if (code) {
+            heading.textContent = code + ' • Server Error';
+            pageTitle.textContent = code + ' • Server Error';
+        }
+
+        const urlParam = params.get('url');
+        errorUrl.textContent = urlParam || '';
+    })();
+</script>
 
 <script>
     (function() {
@@ -197,10 +237,6 @@
             document.body.appendChild(blob);
         }
     })();
-</script>
-
-<script>
-    document.querySelector('.url').textContent = window.location.host + window.location.pathname + window.location.search + window.location.hash;
 </script>
 
 </body>

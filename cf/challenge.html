@@ -4,10 +4,8 @@
     <link rel="icon" type="image/x-icon" href="https://cdn.wikioasis.org/images/metawiki/1/18/favicon.ico" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>503 • Service Unavailable</title>
+    <title>Security Checkpoint • WikiOasis</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://api.dashboard.instatus.com/widget?host=status.wikioasis.org&code=3a58baa4&locale=en">
-    </script>
     <style type="text/css">
         * {
             margin: 0;
@@ -57,6 +55,43 @@
             position: relative;
             z-index: 1;
             gap: 24px;
+        }
+
+        .challenge-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 48px;
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            flex-shrink: 0;
+            position: relative;
+            min-width: 80px;
+            min-height: 80px;
+        }
+
+        .challenge-spinner {
+            position: absolute;
+            width: 36px;
+            height: 36px;
+            border: 3px solid rgba(255, 255, 255, 0.15);
+            border-top-color: rgba(91, 164, 212, 0.9);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .challenge-spinner.hidden {
+            opacity: 0;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         .logo {
@@ -133,6 +168,11 @@
             .buttons {
                 justify-content: center;
             }
+
+            .challenge-box {
+                margin-left: 0;
+                width: 100%;
+            }
         }
     </style>
     <link rel="shortcut icon" href="https://cdn.wikioasis.org/metawiki/1/18/favicon.ico" />
@@ -142,15 +182,41 @@
 <div class="container">
     <img class="logo" src="https://cdn.wikioasis.org/metawiki/3/38/WikiOasis_Logo.png" alt="WikiOasis Logo" />
     <div class="content">
-        <h1>503 • Service Unavailable</h1>
-        <p class="url"></p>
-        <p class="description">We're having some issues at the moment, please retry in a few moments.</p>
+        <h1>Security Checkpoint</h1>
+        <p class="url" id="page-url"></p>
+        <p class="description">Verifying your connection to WikiOasis. This usually only takes a moment.</p>
         <div class="buttons">
             <a href="https://status.wikioasis.org/" class="btn">Status Page</a>
             <a href="https://discord.gg/GrrTcsVC2x" class="btn">Discord</a>
         </div>
     </div>
+    <div class="challenge-box" id="challenge-box">
+        <div class="challenge-spinner" id="challenge-spinner"></div>
+        ::CAPTCHA_BOX::
+    </div>
 </div>
+
+<script>
+    document.getElementById('page-url').textContent = window.location.host + window.location.pathname + window.location.search + window.location.hash;
+
+    (function() {
+        const box = document.getElementById('challenge-box');
+        const spinner = document.getElementById('challenge-spinner');
+
+        const observer = new MutationObserver(function() {
+            const hasWidget = Array.from(box.children).some(function(el) {
+                return el !== spinner && (el.tagName === 'IFRAME' || el.children.length > 0);
+            });
+            if (hasWidget) {
+                spinner.classList.add('hidden');
+                setTimeout(function() { spinner.remove(); }, 300);
+                observer.disconnect();
+            }
+        });
+
+        observer.observe(box, { childList: true, subtree: true });
+    })();
+</script>
 
 <script>
     (function() {
@@ -197,10 +263,6 @@
             document.body.appendChild(blob);
         }
     })();
-</script>
-
-<script>
-    document.querySelector('.url').textContent = window.location.host + window.location.pathname + window.location.search + window.location.hash;
 </script>
 
 </body>
