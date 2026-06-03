@@ -21,7 +21,7 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            padding-left: 10%;
+            padding: 0 10%;
             background: #1a1f2e;
             color: white;
             overflow: hidden;
@@ -53,9 +53,15 @@
 
         .container {
             display: flex;
-            align-items: center;
+            flex-direction: column;
             position: relative;
             z-index: 1;
+            gap: 20px;
+        }
+
+        .top-row {
+            display: flex;
+            align-items: center;
             gap: 24px;
         }
 
@@ -119,19 +125,56 @@
             transform: scale(0.98);
         }
 
+        /* Indented to align with text content (logo 240px + gap 24px) */
+        .details-wrap {
+            margin-left: 264px;
+        }
+
+        .details-box {
+            display: inline-grid;
+            grid-template-columns: auto auto;
+            gap: 6px 20px;
+            padding: 14px 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            font-size: 12px;
+        }
+
+        .detail-label {
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 11px;
+            white-space: nowrap;
+            align-self: center;
+        }
+
+        .detail-value {
+            color: rgba(255, 255, 255, 0.75);
+            font-variant-numeric: tabular-nums;
+            word-break: break-all;
+        }
+
         @media (max-width: 600px) {
             body {
                 padding: 20px;
                 justify-content: center;
             }
 
-            .container {
+            .top-row {
                 flex-direction: column;
                 text-align: center;
             }
 
             .buttons {
                 justify-content: center;
+            }
+
+            .details-wrap {
+                margin-left: 0;
             }
         }
     </style>
@@ -140,14 +183,24 @@
 <body>
 
 <div class="container">
-    <img class="logo" src="https://cdn.wikioasis.org/metawiki/3/38/WikiOasis_Logo.png" alt="WikiOasis Logo" />
-    <div class="content">
-        <h1 id="error-heading">5xx • Server Error</h1>
-        <p class="url" id="error-url"></p>
-        <p class="description" id="error-description">Something went wrong on our end. Please try again in a few moments.</p>
-        <div class="buttons">
-            <a href="https://status.wikioasis.org/" class="btn">Status Page</a>
-            <a href="https://discord.gg/GrrTcsVC2x" class="btn">Discord</a>
+    <div class="top-row">
+        <img class="logo" src="https://cdn.wikioasis.org/metawiki/3/38/WikiOasis_Logo.png" alt="WikiOasis Logo" />
+        <div class="content">
+            <h1 id="error-heading">5xx • Server Error</h1>
+            <p class="url" id="error-url"></p>
+            <p class="description" id="error-description">Something went wrong on our end. Please try again in a few moments.</p>
+            <div class="buttons">
+                <a href="https://status.wikioasis.org/" class="btn">Status Page</a>
+                <a href="https://discord.gg/GrrTcsVC2x" class="btn">Discord</a>
+            </div>
+        </div>
+    </div>
+    <div class="details-wrap" id="details-wrap">
+        <div class="details-box">
+            <span class="detail-label">Ray ID</span>
+            <span class="detail-value" id="cf-ray-id">::RAY_ID::</span>
+            <span class="detail-label">Your IP</span>
+            <span class="detail-value">::CLIENT_IP::</span>
         </div>
     </div>
 </div>
@@ -173,22 +226,29 @@
         const code = parseInt(params.get('code'), 10) || null;
         const info = code ? ERROR_INFO[code] : null;
 
-        const heading = document.getElementById('error-heading');
+        const heading     = document.getElementById('error-heading');
         const description = document.getElementById('error-description');
-        const pageTitle = document.getElementById('page-title');
-        const errorUrl = document.getElementById('error-url');
+        const pageTitle   = document.getElementById('page-title');
+        const errorUrl    = document.getElementById('error-url');
 
         if (code && info) {
-            heading.textContent = code + ' • ' + info.title;
+            heading.textContent   = code + ' • ' + info.title;
             description.textContent = info.description;
             pageTitle.textContent = code + ' • ' + info.title;
         } else if (code) {
-            heading.textContent = code + ' • Server Error';
+            heading.textContent   = code + ' • Server Error';
             pageTitle.textContent = code + ' • Server Error';
         }
 
         const urlParam = params.get('url');
         errorUrl.textContent = urlParam || '';
+
+        // Hide the details box when CF hasn't replaced the magic words
+        // (e.g. viewing the page directly, outside of Cloudflare)
+        const rayId = document.getElementById('cf-ray-id');
+        if (rayId && rayId.textContent.indexOf('::') !== -1) {
+            document.getElementById('details-wrap').style.display = 'none';
+        }
     })();
 </script>
 
