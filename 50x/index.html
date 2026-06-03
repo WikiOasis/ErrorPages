@@ -21,10 +21,10 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            padding: 0 10%;
+            padding: 40px 10%;
             background: #1a1f2e;
             color: white;
-            overflow: hidden;
+            overflow-x: hidden;
             position: relative;
         }
 
@@ -126,65 +126,51 @@
         }
 
         /* Indented to align with text content (logo 240px + gap 24px) */
-        .details-wrap {
+        .cf-error-wrap {
             margin-left: 264px;
         }
 
-        .details-reveal {
-            display: inline-flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .details-hint {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.3);
-            cursor: default;
-            user-select: none;
-            letter-spacing: 0.02em;
-            transition: color 0.2s ease;
-        }
-
-        .details-reveal:hover .details-hint {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .details-box {
-            display: inline-grid;
-            grid-template-columns: auto auto;
-            gap: 6px 20px;
-            padding: 14px 18px;
-            border-radius: 12px;
+        .cf-error-box {
+            padding: 20px 24px;
+            border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            font-size: 12px;
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(-4px);
-            transition: opacity 0.2s ease, transform 0.2s ease;
         }
 
-        .details-reveal:hover .details-box {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translateY(0);
+        /* Override CF's injected styles */
+        .cf-error-box,
+        .cf-error-box * {
+            background: transparent !important;
+            color: white !important;
+            font-family: 'Inter', sans-serif !important;
+            border-color: transparent !important;
         }
 
-        .detail-label {
-            color: rgba(255, 255, 255, 0.4);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-size: 11px;
-            white-space: nowrap;
-            align-self: center;
+        .cf-error-box h2 {
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            margin-bottom: 8px !important;
         }
 
-        .detail-value {
-            color: rgba(255, 255, 255, 0.75);
-            font-variant-numeric: tabular-nums;
-            word-break: break-all;
+        .cf-error-box p {
+            font-size: 14px !important;
+            color: rgba(255, 255, 255, 0.65) !important;
+            margin-bottom: 12px !important;
+            line-height: 1.5 !important;
+        }
+
+        .cf-error-box ul {
+            padding-left: 18px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 4px !important;
+        }
+
+        .cf-error-box li {
+            font-size: 13px !important;
+            color: rgba(255, 255, 255, 0.55) !important;
         }
 
         @media (max-width: 600px) {
@@ -202,7 +188,7 @@
                 justify-content: center;
             }
 
-            .details-wrap {
+            .cf-error-wrap {
                 margin-left: 0;
             }
         }
@@ -224,19 +210,10 @@
             </div>
         </div>
     </div>
-    <div class="details-wrap" id="details-wrap">
-        <div class="details-reveal">
-            <span class="details-hint">Technical details</span>
-            <div class="details-box">
-                <span class="detail-label">Ray ID</span>
-                <span class="detail-value" id="cf-ray-id">::RAY_ID::</span>
-                <span class="detail-label">Your IP</span>
-                <span class="detail-value">::CLIENT_IP::</span>
-            </div>
+    <div class="cf-error-wrap">
+        <div class="cf-error-box">
+            ::CLOUDFLARE_ERROR_500S_BOX::
         </div>
-    </div>
-    <div class="details-wrap">
-        ::CLOUDFLARE_ERROR_500S_BOX::
     </div>
 </div>
 
@@ -277,13 +254,6 @@
 
         const urlParam = params.get('url');
         errorUrl.textContent = urlParam || '';
-
-        // Hide the details box when CF hasn't replaced the magic words
-        // (e.g. viewing the page directly, outside of Cloudflare)
-        const rayId = document.getElementById('cf-ray-id');
-        if (rayId && rayId.textContent.indexOf('::') !== -1) {
-            document.getElementById('details-wrap').style.display = 'none';
-        }
     })();
 </script>
 
