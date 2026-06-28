@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title id="page-title">10xx • Configuration Error</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif:wght@500;600;700&display=swap" rel="stylesheet">
     <script src="https://api.dashboard.instatus.com/widget?host=status.wikioasis.org&code=3a58baa4&locale=en">
     </script>
     <style type="text/css">
@@ -21,34 +21,22 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            padding: 40px 10%;
-            background: #1a1f2e;
-            color: white;
-            overflow-x: hidden;
+            padding: 48px 10%;
+            background: #1a2532;
+            color: #e8ecef;
+            overflow: hidden;
             position: relative;
         }
 
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.5;
-            pointer-events: none;
+        /* Decorative geometric cluster, bottom-right */
+        .decor {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            width: min(440px, 42vw);
+            height: auto;
             z-index: 0;
-            animation: fade 8s ease-in-out infinite, float 15s ease-in-out infinite;
-            will-change: transform, opacity;
-        }
-
-        @keyframes fade {
-            0%, 100% { opacity: 0.4; }
-            50%       { opacity: 0.6; }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(-50%, -50%) translate(0, 0); }
-            25%       { transform: translate(-50%, -50%) translate(30px, -20px); }
-            50%       { transform: translate(-50%, -50%) translate(-20px, 30px); }
-            75%       { transform: translate(-50%, -50%) translate(20px, 20px); }
+            pointer-events: none;
         }
 
         .container {
@@ -56,84 +44,41 @@
             flex-direction: column;
             position: relative;
             z-index: 1;
-            gap: 20px;
-        }
-
-        .top-row {
-            display: flex;
-            align-items: center;
-            gap: 24px;
+            max-width: 620px;
         }
 
         .logo {
-            width: 240px;
+            width: 150px;
             height: auto;
-            flex-shrink: 0;
-        }
-
-        .content {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
+            margin-bottom: 64px;
         }
 
         h1 {
-            font-size: 28px;
+            font-family: 'Noto Serif', serif;
+            font-size: clamp(40px, 5.5vw, 60px);
             font-weight: 600;
-            color: white;
-            margin-bottom: 2px;
-        }
-
-        .url {
-            font-size: 13px;
-            color: #5ba4d4;
-            margin-bottom: 2px;
+            line-height: 1.08;
+            letter-spacing: -0.5px;
+            color: #e8ecef;
+            max-width: 16ch;
         }
 
         .description {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 16px;
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.45);
+            margin-top: 14px;
+            max-width: 46ch;
         }
 
-        .buttons {
-            display: flex;
-            gap: 12px;
-        }
-
-        .btn {
-            padding: 10px 24px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 500;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            color: white;
-        }
-
-        .btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .btn:active {
-            transform: scale(0.98);
-        }
-
-        /* Indented to align with text content (logo 240px + gap 24px) */
         .cf-error-wrap {
-            margin-left: 264px;
+            margin-top: 40px;
+            max-width: 480px;
         }
 
         .cf-error-box {
-            padding: 20px 24px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 18px 22px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -143,21 +88,21 @@
         .cf-error-box,
         .cf-error-box * {
             background: transparent !important;
-            color: white !important;
+            color: #e8ecef !important;
             font-family: 'Inter', sans-serif !important;
             border-color: transparent !important;
         }
 
         .cf-error-box h2 {
-            font-size: 18px !important;
+            font-size: 16px !important;
             font-weight: 600 !important;
             margin-bottom: 8px !important;
         }
 
         .cf-error-box p {
-            font-size: 14px !important;
-            color: rgba(255, 255, 255, 0.65) !important;
-            margin-bottom: 12px !important;
+            font-size: 13px !important;
+            color: rgba(255, 255, 255, 0.55) !important;
+            margin-bottom: 10px !important;
             line-height: 1.5 !important;
         }
 
@@ -169,27 +114,53 @@
         }
 
         .cf-error-box li {
-            font-size: 13px !important;
-            color: rgba(255, 255, 255, 0.55) !important;
+            font-size: 12px !important;
+            color: rgba(255, 255, 255, 0.45) !important;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 11px 28px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #ffffff;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.14);
+            border-color: rgba(255, 255, 255, 0.18);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
         }
 
         @media (max-width: 600px) {
             body {
-                padding: 20px;
-                justify-content: center;
+                padding: 56px 24px 32px;
+                align-items: flex-start;
             }
 
-            .top-row {
-                flex-direction: column;
-                text-align: center;
+            .decor {
+                width: min(360px, 75vw);
+                opacity: 0.8;
             }
 
-            .buttons {
-                justify-content: center;
-            }
-
-            .cf-error-wrap {
-                margin-left: 0;
+            .logo {
+                margin-bottom: 40px;
             }
         }
     </style>
@@ -197,72 +168,46 @@
 </head>
 <body>
 
+<svg class="decor" viewBox="0 0 560 560" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="gA" x1="0.15" y1="0" x2="0.85" y2="1">
+            <stop offset="0" stop-color="#6fc5f1"/><stop offset="1" stop-color="#2f8fd6"/>
+        </linearGradient>
+        <linearGradient id="gB" x1="0.15" y1="0" x2="0.85" y2="1">
+            <stop offset="0" stop-color="#4aa8e8"/><stop offset="1" stop-color="#2470bd"/>
+        </linearGradient>
+        <linearGradient id="gC" x1="0.15" y1="0" x2="0.85" y2="1">
+            <stop offset="0" stop-color="#2c6fb0"/><stop offset="1" stop-color="#184f86"/>
+        </linearGradient>
+    </defs>
+    <!-- quarter-fans only, tessellated bottom-right -->
+    <path d="M560,0 L560,140 A140,140 0 0 1 420,0 Z" fill="url(#gA)"/>
+    <path d="M560,140 L560,280 A140,140 0 0 1 420,140 Z" fill="url(#gB)"/>
+    <path d="M560,420 L420,420 A140,140 0 0 1 560,280 Z" fill="url(#gA)"/>
+    <path d="M420,420 L560,420 A140,140 0 0 1 420,560 Z" fill="url(#gB)"/>
+    <path d="M280,280 L280,140 A140,140 0 0 1 420,280 Z" fill="url(#gA)"/>
+    <path d="M420,280 L420,420 A140,140 0 0 1 280,280 Z" fill="url(#gA)"/>
+    <path d="M280,560 L280,420 A140,140 0 0 1 420,560 Z" fill="url(#gB)"/>
+    <path d="M280,140 L280,280 A140,140 0 0 1 140,140 Z" fill="url(#gC)"/>
+    <path d="M280,420 L140,420 A140,140 0 0 1 280,280 Z" fill="url(#gB)"/>
+    <path d="M280,420 L280,560 A140,140 0 0 1 140,420 Z" fill="url(#gC)"/>
+    <path d="M0,560 L0,420 A140,140 0 0 1 140,560 Z" fill="url(#gA)"/>
+</svg>
+
 <div class="container">
-    <div class="top-row">
-        <img class="logo" src="https://cdn.wikioasis.org/metawiki/3/38/WikiOasis_Logo.png" alt="WikiOasis Logo" />
-        <div class="content">
-            <h1 id="error-heading">10xx • Configuration Error</h1>
-            <p class="url" id="error-url"></p>
-            <p class="description" id="error-description">Something's gone wrong on our end. We're working to fix it now.</p>
-            <div class="buttons">
-                <a href="https://status.wikioasis.org/" class="btn">Status Page</a>
-                <a href="https://discord.gg/GrrTcsVC2x" class="btn">Discord</a>
-            </div>
-        </div>
-    </div>
+    <img class="logo" src="https://cdn.wikioasis.org/metawiki/3/38/WikiOasis_Logo.png" alt="WikiOasis Logo" />
+    <h1 id="error-heading">Configuration Error</h1>
+    <p class="description" id="error-description">Something isn't set right, we're working to fix it.</p>
     <div class="cf-error-wrap">
         <div class="cf-error-box">
             ::CLOUDFLARE_ERROR_1000S_BOX::
         </div>
     </div>
+    <div class="buttons">
+        <a href="https://discord.gg/GrrTcsVC2x" class="btn">Discord</a>
+        <a href="https://status.wikioasis.org/" class="btn">Status</a>
+    </div>
 </div>
-
-<script>
-    (function() {
-        const colors = [
-            'rgba(64, 224, 208, 0.25)',
-            'rgba(46, 139, 87, 0.2)',
-            'rgba(0, 150, 136, 0.25)',
-            'rgba(30, 144, 255, 0.3)',
-            'rgba(30, 80, 120, 0.35)',
-            'rgba(45, 120, 160, 0.3)',
-            'rgba(32, 110, 165, 0.3)',
-            'rgba(30, 50, 160, 0.3)',
-            'rgba(10, 30, 105, 0.3)',
-            'rgba(0, 206, 209, 0.25)',
-            'rgba(65, 105, 225, 0.2)'
-        ];
-
-        const numBlobs = 8 + Math.floor(Math.random() * 5);
-
-        for (let i = 0; i < numBlobs; i++) {
-            const blob = document.createElement('div');
-            blob.className = 'blob';
-
-            const size = 300 + Math.random() * 300;
-            blob.style.width = size + 'px';
-            blob.style.height = size + 'px';
-
-            const xBias = 0.3 + Math.random() * 0.7;
-            blob.style.left = (xBias * 100) + '%';
-            blob.style.top = (Math.random() * 100) + '%';
-            blob.style.transform = 'translate(-50%, -50%)';
-
-            blob.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-
-            const fadeDuration  = 6  + Math.random() * 8;
-            const floatDuration = 12 + Math.random() * 16;
-            const fadeDelay     = Math.random() * 5;
-            const floatDelay    = Math.random() * 5;
-
-            blob.style.animation =
-                'fade '  + fadeDuration  + 's ease-in-out ' + fadeDelay  + 's infinite, ' +
-                'float ' + floatDuration + 's ease-in-out ' + floatDelay + 's infinite';
-
-            document.body.appendChild(blob);
-        }
-    })();
-</script>
 
 </body>
 </html>
