@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>429 • Too Many Requests</title>
+<link rel="icon" type="image/x-icon" href="https://cdn.wikioasis.org/metawiki/1/18/favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Mozilla+Headline:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 48px 10%;
+  background:
+    radial-gradient(ellipse 60% 55% at 85% 95%, rgba(47, 143, 214, 0.16), transparent 70%),
+    #16212f;
+  color: #e8ecef;
+  overflow: hidden;
+  position: relative;
+}
+
+.glow {
+  position: fixed;
+  right: -8vw;
+  bottom: -12vw;
+  width: 60vw;
+  height: 60vw;
+  max-width: 760px;
+  max-height: 760px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(74, 168, 232, 0.28), transparent 65%);
+  filter: blur(40px);
+  pointer-events: none;
+  animation: breathe 9s ease-in-out infinite;
+}
+
+.decor {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: min(600px, 54vw);
+  height: auto;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.tile {
+  transition: transform 1.2s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 620px;
+  animation: rise 0.6s ease-out both;
+}
+
+.logo { width: 210px; height: auto; margin-bottom: 56px; }
+
+h1 {
+  font-family: 'Mozilla Headline', 'Inter', system-ui, sans-serif;
+  font-size: clamp(42px, 5.8vw, 66px);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  color: #e8ecef;
+  max-width: 16ch;
+}
+
+.description {
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.55);
+  margin-top: 16px;
+  max-width: 46ch;
+}
+
+.cf-error-wrap { margin-top: 36px; max-width: 480px; }
+
+.cf-error-box {
+  padding: 18px 22px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.cf-error-box,
+.cf-error-box * {
+  background: transparent !important;
+  color: #e8ecef !important;
+  font-family: 'Inter', sans-serif !important;
+  border-color: transparent !important;
+}
+
+.cf-error-box h2 { font-size: 16px !important; font-weight: 600 !important; margin-bottom: 8px !important; }
+.cf-error-box p { font-size: 13px !important; color: rgba(255, 255, 255, 0.55) !important; margin-bottom: 10px !important; line-height: 1.5 !important; }
+.cf-error-box ul { padding-left: 18px !important; display: flex !important; flex-direction: column !important; gap: 4px !important; }
+.cf-error-box li { font-size: 12px !important; color: rgba(255, 255, 255, 0.45) !important; }
+
+.buttons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+
+.btn {
+  padding: 11px 26px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+.btn:hover { background: rgba(255, 255, 255, 0.14); border-color: rgba(255, 255, 255, 0.2); }
+.btn:active { transform: scale(0.98); }
+.btn:focus-visible { outline: 2px solid #4aa8e8; outline-offset: 3px; }
+.btn.primary { background: #2f8fd6; border-color: #4aa8e8; }
+.btn.primary:hover { background: #3a9be3; box-shadow: 0 0 22px rgba(74, 168, 232, 0.4); }
+
+.ray-id { font-size: 12px; color: rgba(255, 255, 255, 0.35); margin-top: 10px; }
+
+.challenge-spinner-row { display: flex; align-items: center; gap: 10px; color: rgba(255, 255, 255, 0.5); font-size: 13px; transition: opacity 0.3s ease; }
+.challenge-spinner-row.hidden { opacity: 0; pointer-events: none; }
+.challenge-spinner { width: 18px; height: 18px; border: 2px solid rgba(255, 255, 255, 0.15); border-top-color: rgba(111, 197, 241, 0.9); border-radius: 50%; animation: spin 0.8s linear infinite; flex-shrink: 0; }
+#challenge-box { opacity: 0; max-height: 0; overflow: hidden; transition: opacity 0.3s ease; }
+#challenge-box.visible { opacity: 1; max-height: 600px; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes breathe { 0%, 100% { opacity: 0.55; transform: scale(0.96); } 50% { opacity: 1; transform: scale(1.05); } }
+
+@media (max-width: 600px) {
+  body { padding: 56px 24px 32px; align-items: flex-start; }
+  .decor { width: min(380px, 80vw); opacity: 0.85; }
+  .logo { width: 170px; margin-bottom: 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="glow" aria-hidden="true"></div>
+<svg class="decor" viewBox="0 0 770 770" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gA" x1="0.15" y1="0" x2="0.85" y2="1"><stop offset="0" stop-color="#6fc5f1"/><stop offset="1" stop-color="#2f8fd6"/></linearGradient><linearGradient id="gB" x1="0.15" y1="0" x2="0.85" y2="1"><stop offset="0" stop-color="#4aa8e8"/><stop offset="1" stop-color="#2470bd"/></linearGradient><linearGradient id="gC" x1="0.15" y1="0" x2="0.85" y2="1"><stop offset="0" stop-color="#2c6fb0"/><stop offset="1" stop-color="#184f86"/></linearGradient><linearGradient id="gD" x1="0.15" y1="0" x2="0.85" y2="1"><stop offset="0" stop-color="#8fd8f7"/><stop offset="1" stop-color="#4aa8e8"/></linearGradient></defs><g transform="translate(660,0)"><path class="tile" data-r="90" style="transform-origin:55.0px 55.0px;transform:rotate(90deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gB)"/></g><g transform="translate(550,110)"><path class="tile" data-r="270" style="transform-origin:55.0px 55.0px;transform:rotate(270deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gD)"/></g><g transform="translate(440,220)"><path class="tile" data-r="90" style="transform-origin:55.0px 55.0px;transform:rotate(90deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(550,220)"><path class="tile" data-r="180" style="transform-origin:55.0px 55.0px;transform:rotate(180deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gC)"/></g><g transform="translate(660,220)"><path class="tile" data-r="90" style="transform-origin:55.0px 55.0px;transform:rotate(90deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gC)"/></g><g transform="translate(440,330)"><path class="tile" data-r="0" style="transform-origin:55.0px 55.0px;transform:rotate(0deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gD)"/></g><g transform="translate(550,330)"><path class="tile" data-r="90" style="transform-origin:55.0px 55.0px;transform:rotate(90deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(660,330)"><path class="tile" data-r="0" style="transform-origin:55.0px 55.0px;transform:rotate(0deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(440,440)"><path class="tile" data-r="90" style="transform-origin:55.0px 55.0px;transform:rotate(90deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(550,440)"><path class="tile" data-r="270" style="transform-origin:55.0px 55.0px;transform:rotate(270deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(660,440)"><path class="tile" data-r="0" style="transform-origin:55.0px 55.0px;transform:rotate(0deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gB)"/></g><g transform="translate(110,550)"><path class="tile" data-r="180" style="transform-origin:55.0px 55.0px;transform:rotate(180deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gC)"/></g><g transform="translate(220,550)"><path class="tile" data-r="270" style="transform-origin:55.0px 55.0px;transform:rotate(270deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(330,550)"><path class="tile" data-r="90" style="transform-origin:55.0px 55.0px;transform:rotate(90deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(440,550)"><path class="tile" data-r="270" style="transform-origin:55.0px 55.0px;transform:rotate(270deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(550,550)"><path class="tile" data-r="90" style="transform-origin:55.0px 55.0px;transform:rotate(90deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(660,550)"><path class="tile" data-r="90" style="transform-origin:55.0px 55.0px;transform:rotate(90deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(110,660)"><path class="tile" data-r="90" style="transform-origin:55.0px 55.0px;transform:rotate(90deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gB)"/></g><g transform="translate(220,660)"><path class="tile" data-r="180" style="transform-origin:55.0px 55.0px;transform:rotate(180deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gC)"/></g><g transform="translate(330,660)"><path class="tile" data-r="90" style="transform-origin:55.0px 55.0px;transform:rotate(90deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(440,660)"><path class="tile" data-r="0" style="transform-origin:55.0px 55.0px;transform:rotate(0deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gC)"/></g><g transform="translate(550,660)"><path class="tile" data-r="270" style="transform-origin:55.0px 55.0px;transform:rotate(270deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(660,660)"><path class="tile" data-r="180" style="transform-origin:55.0px 55.0px;transform:rotate(180deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gC)"/></g></svg>
+<div class="container">
+  <img class="logo" src="https://cdn.wikioasis.org/metawiki/3/38/WikiOasis_Logo.png" alt="WikiOasis">
+  <h1>429: Too Many Requests</h1>
+  <p class="description">You’ve sent a lot of requests recently. Wait a little while, then try again.</p>
+
+  <div class="buttons"><a class="btn primary" href="javascript:location.reload()">Try again</a><a class="btn" href="https://discord.gg/GrrTcsVC2x">Discord</a><a class="btn" href="https://status.wikioasis.org/">Status</a></div>
+</div>
+<script>
+(function () {
+  var tiles = Array.prototype.slice.call(document.querySelectorAll('.tile'));
+  if (!tiles.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  function turn(tile) {
+    var angle = (parseInt(tile.getAttribute('data-r'), 10) || 0) + 90;
+    tile.setAttribute('data-r', angle);
+    tile.style.transform = 'rotate(' + angle + 'deg)';
+  }
+  function tick() {
+    var count = Math.random() < 0.4 ? 2 : 1;
+    for (var i = 0; i < count; i++) turn(tiles[Math.floor(Math.random() * tiles.length)]);
+    setTimeout(tick, 1100 + Math.random() * 1400);
+  }
+  setTimeout(tick, 900);
+})();
+</script>
+
+</body>
+</html>
