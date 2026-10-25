@@ -89,13 +89,10 @@ CHALLENGE_SCRIPT = """<script>
 </script>"""
 
 CLOUDFLARE = [
-    cloudflare('503/index.html', '503', 'Service Unavailable',
-               'There are no servers ready to handle your request. Try again in a few moments.',
-               DISCORD + STATUS, box('::CLOUDFLARE_ERROR_500S_BOX::')),
-    cloudflare('50x/index.html', '5xx', 'Server Error',
+    cloudflare('cf/500.html', '5xx', 'Server Error',
                'Something went wrong on our end. Please try again in a few moments.',
                DISCORD + STATUS, box('::CLOUDFLARE_ERROR_500S_BOX::')),
-    cloudflare('100x/index.html', '10xx', 'Configuration Error',
+    cloudflare('cf/1000.html', '10xx', 'Configuration Error',
                'Something isn’t set right, we’re working to fix it.',
                DISCORD + STATUS, box('::CLOUDFLARE_ERROR_1000S_BOX::')),
     cloudflare('cf/block.html', '403', 'Blocked',
