@@ -42,13 +42,13 @@ body {
   position: fixed;
   right: 0;
   bottom: 0;
-  width: min(600px, 54vw);
-  height: auto;
   z-index: 0;
   pointer-events: none;
 }
 
 .tile {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
   transition: transform 1.2s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
@@ -141,7 +141,7 @@ h1 {
 
 @media (max-width: 600px) {
   body { padding: 56px 24px 32px; align-items: flex-start; }
-  .decor { width: min(380px, 80vw); opacity: 0.85; }
+  .decor { opacity: 0.8; }
   .logo { width: 170px; margin-bottom: 40px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -151,7 +151,7 @@ h1 {
 </head>
 <body>
 <div class="glow" aria-hidden="true"></div>
-<svg class="decor" viewBox="0 0 770 770" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gA" x1="0.15" y1="0" x2="0.85" y2="1"><stop offset="0" stop-color="#6fc5f1"/><stop offset="1" stop-color="#2f8fd6"/></linearGradient><linearGradient id="gB" x1="0.15" y1="0" x2="0.85" y2="1"><stop offset="0" stop-color="#4aa8e8"/><stop offset="1" stop-color="#2470bd"/></linearGradient><linearGradient id="gC" x1="0.15" y1="0" x2="0.85" y2="1"><stop offset="0" stop-color="#2c6fb0"/><stop offset="1" stop-color="#184f86"/></linearGradient><linearGradient id="gD" x1="0.15" y1="0" x2="0.85" y2="1"><stop offset="0" stop-color="#8fd8f7"/><stop offset="1" stop-color="#4aa8e8"/></linearGradient></defs><g transform="translate(660,0)"><path class="tile" data-r="90" style="transform-origin:55.0px 55.0px;transform:rotate(90deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gB)"/></g><g transform="translate(550,110)"><path class="tile" data-r="270" style="transform-origin:55.0px 55.0px;transform:rotate(270deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gD)"/></g><g transform="translate(440,220)"><path class="tile" data-r="90" style="transform-origin:55.0px 55.0px;transform:rotate(90deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(550,220)"><path class="tile" data-r="180" style="transform-origin:55.0px 55.0px;transform:rotate(180deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gC)"/></g><g transform="translate(660,220)"><path class="tile" data-r="90" style="transform-origin:55.0px 55.0px;transform:rotate(90deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gC)"/></g><g transform="translate(440,330)"><path class="tile" data-r="0" style="transform-origin:55.0px 55.0px;transform:rotate(0deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gD)"/></g><g transform="translate(550,330)"><path class="tile" data-r="90" style="transform-origin:55.0px 55.0px;transform:rotate(90deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(660,330)"><path class="tile" data-r="0" style="transform-origin:55.0px 55.0px;transform:rotate(0deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(440,440)"><path class="tile" data-r="90" style="transform-origin:55.0px 55.0px;transform:rotate(90deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(550,440)"><path class="tile" data-r="270" style="transform-origin:55.0px 55.0px;transform:rotate(270deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(660,440)"><path class="tile" data-r="0" style="transform-origin:55.0px 55.0px;transform:rotate(0deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gB)"/></g><g transform="translate(110,550)"><path class="tile" data-r="180" style="transform-origin:55.0px 55.0px;transform:rotate(180deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gC)"/></g><g transform="translate(220,550)"><path class="tile" data-r="270" style="transform-origin:55.0px 55.0px;transform:rotate(270deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(330,550)"><path class="tile" data-r="90" style="transform-origin:55.0px 55.0px;transform:rotate(90deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(440,550)"><path class="tile" data-r="270" style="transform-origin:55.0px 55.0px;transform:rotate(270deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(550,550)"><path class="tile" data-r="90" style="transform-origin:55.0px 55.0px;transform:rotate(90deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(660,550)"><path class="tile" data-r="90" style="transform-origin:55.0px 55.0px;transform:rotate(90deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(110,660)"><path class="tile" data-r="90" style="transform-origin:55.0px 55.0px;transform:rotate(90deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gB)"/></g><g transform="translate(220,660)"><path class="tile" data-r="180" style="transform-origin:55.0px 55.0px;transform:rotate(180deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gC)"/></g><g transform="translate(330,660)"><path class="tile" data-r="90" style="transform-origin:55.0px 55.0px;transform:rotate(90deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(440,660)"><path class="tile" data-r="0" style="transform-origin:55.0px 55.0px;transform:rotate(0deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gC)"/></g><g transform="translate(550,660)"><path class="tile" data-r="270" style="transform-origin:55.0px 55.0px;transform:rotate(270deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gA)"/></g><g transform="translate(660,660)"><path class="tile" data-r="180" style="transform-origin:55.0px 55.0px;transform:rotate(180deg)" d="M0,0 L110,0 A110,110 0 0 1 0,110 Z" fill="url(#gC)"/></g></svg>
+<svg class="decor" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"></svg>
 <div class="container">
   <img class="logo" src="https://cdn.wikioasis.org/metawiki/3/38/WikiOasis_Logo.png" alt="WikiOasis">
   <h1>503: Service Unavailable</h1>
@@ -161,19 +161,123 @@ h1 {
 </div>
 <script>
 (function () {
-  var tiles = Array.prototype.slice.call(document.querySelectorAll('.tile'));
-  if (!tiles.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var svg = document.querySelector('.decor');
+  var NS = 'http://www.w3.org/2000/svg';
+  var GRADIENTS = [['#6fc5f1', '#2f8fd6'], ['#4aa8e8', '#2470bd'], ['#2c6fb0', '#184f86'], ['#8fd8f7', '#4aa8e8']];
+  var WEIGHTS = [4, 4, 3, 1];
+  var seed = (Math.random() * 4294967296) >>> 0;
+  function rand() {
+    seed = (seed + 0x6D2B79F5) >>> 0;
+    var t = seed;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  }
+  function pick() {
+    var r = rand() * 12, i = 0;
+    while (r >= WEIGHTS[i]) r -= WEIGHTS[i++];
+    return i;
+  }
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var tiles = [];
+  var timer = null;
+
+  function build() {
+    var vw = window.innerWidth, vh = window.innerHeight;
+    var cell = Math.max(48, Math.min(vw, vh) * 0.1);
+    var cols = Math.max(3, Math.min(14, Math.ceil(vw * 0.5 / cell)));
+    var rows = Math.max(3, Math.min(12, Math.ceil(vh * 0.7 / cell)));
+    var half = cell / 2;
+    var w = cols * cell, h = rows * cell;
+    seed = seed || 1;
+    var saved = seed;
+    seed = build.base;
+    svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+    svg.style.width = w + 'px';
+    svg.style.height = h + 'px';
+    svg.textContent = '';
+    var defs = document.createElementNS(NS, 'defs');
+    GRADIENTS.forEach(function (g, i) {
+      var lg = document.createElementNS(NS, 'linearGradient');
+      lg.setAttribute('id', 'g' + i);
+      lg.setAttribute('x1', '0.15'); lg.setAttribute('y1', '0');
+      lg.setAttribute('x2', '0.85'); lg.setAttribute('y2', '1');
+      [0, 1].forEach(function (k) {
+        var stop = document.createElementNS(NS, 'stop');
+        stop.setAttribute('offset', k);
+        stop.setAttribute('stop-color', g[k]);
+        lg.appendChild(stop);
+      });
+      defs.appendChild(lg);
+    });
+    svg.appendChild(defs);
+    tiles = [];
+    function add(x, y, size, turn, grad) {
+      var g = document.createElementNS(NS, 'g');
+      g.setAttribute('transform', 'translate(' + x + ',' + y + ')');
+      var p = document.createElementNS(NS, 'path');
+      p.setAttribute('class', 'tile');
+      p.setAttribute('data-r', turn);
+      p.setAttribute('d', 'M0,0 L' + size + ',0 A' + size + ',' + size + ' 0 0 1 0,' + size + ' Z');
+      p.setAttribute('fill', 'url(#g' + grad + ')');
+      p.style.transform = 'rotate(' + turn + 'deg)';
+      g.appendChild(p);
+      svg.appendChild(g);
+      tiles.push(p);
+    }
+    var grid = [];
+    for (var row = 0; row < rows; row++) {
+      grid[row] = [];
+      for (var col = 0; col < cols; col++) {
+        var dx = (cols - 1 - col) / cols, dy = (rows - 1 - row) / rows;
+        var d = Math.sqrt(dx * dx + dy * dy);
+        var keep = d < 0.3 ? 1 : Math.max(0, 1 - Math.pow((d - 0.3) / 0.7, 1.4));
+        grid[row][col] = rand() < keep;
+      }
+    }
+    // drop tiles not connected towards the corner, so nothing floats alone
+    for (row = rows - 1; row >= 0; row--) {
+      for (col = cols - 1; col >= 0; col--) {
+        if (!grid[row][col] || (row === rows - 1 && col === cols - 1)) continue;
+        var right = col < cols - 1 && grid[row][col + 1];
+        var below = row < rows - 1 && grid[row + 1][col];
+        if (!right && !below) grid[row][col] = false;
+      }
+    }
+    for (row = 0; row < rows; row++) {
+      for (col = 0; col < cols; col++) {
+        if (grid[row][col]) add(col * cell, row * cell, cell, Math.floor(rand() * 4) * 90, pick());
+      }
+    }
+    seed = saved;
+  }
+  build.base = seed;
+
   function turn(tile) {
     var angle = (parseInt(tile.getAttribute('data-r'), 10) || 0) + 90;
     tile.setAttribute('data-r', angle);
     tile.style.transform = 'rotate(' + angle + 'deg)';
   }
   function tick() {
-    var count = Math.random() < 0.4 ? 2 : 1;
-    for (var i = 0; i < count; i++) turn(tiles[Math.floor(Math.random() * tiles.length)]);
+    if (tiles.length) {
+      var count = Math.random() < 0.4 ? 2 : 1;
+      for (var i = 0; i < count; i++) turn(tiles[Math.floor(Math.random() * tiles.length)]);
+    }
     setTimeout(tick, 1100 + Math.random() * 1400);
   }
-  setTimeout(tick, 900);
+
+  build();
+  var lastW = window.innerWidth, lastH = window.innerHeight;
+  window.addEventListener('resize', function () {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      if (window.innerWidth !== lastW || window.innerHeight !== lastH) {
+        lastW = window.innerWidth; lastH = window.innerHeight;
+        build();
+      }
+    }, 150);
+  });
+  if (!reduced) setTimeout(tick, 900);
 })();
 </script>
 
